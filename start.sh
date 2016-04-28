@@ -2,7 +2,13 @@
 
 
 git pull
-route = /home/myblog/bin/www
-express_pid=`ps -axu|grep node|grep $route|awk 'print{$2}'`
-kill $express_pid
-nohup node $route &
+expressroute=/home/myblog/bin/www
+expresspid=`ps -axu|awk '/node/{print $2}'`
+if [ -z $expresspid ];
+then
+    nohup node $expressroute &
+else
+    kill $expresspid
+    nohup node $expressroute &
+fi
+
